@@ -34,10 +34,21 @@ se hace la solicitud al controlador para ejecutar la
 operación solicitada
 """
 
+
 def printMenu():
+    print("-----------------------------------------------------------------------------")
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- ")
+    print("2- Encontrar puntos de interconexión aérea")
+    print("3- Encontrar clústeres de tráfico aéreo")
+    print("4- Encontrar la ruta más corta entre ciudades")
+    print("5- Utilizar las millas de viajero")
+    print("6- Cuantificar el efecto de un aeropuerto cerrado")
+    print("7- Comparar con servicio WEB externo")
+    print("8- Visualizar gráficamente los requerimientos")
+    print("0- Cerrar aplicacion")
+    print("-----------------------------------------------------------------------------")
+
 
 catalog = None
 
@@ -51,6 +62,24 @@ while True:
         print("Cargando información de los archivos ....")
 
     elif int(inputs[0]) == 2:
+        pass
+
+    elif int(inputs[0]) == 3:
+        pass
+
+    elif int(inputs[0]) == 4:
+        pass
+
+    elif int(inputs[0]) == 5:
+        pass
+
+    elif int(inputs[0]) == 6:
+        pass
+
+    elif int(inputs[0]) == 7:
+        pass
+
+    elif int(inputs[0]) == 8:
         pass
 
     else:
