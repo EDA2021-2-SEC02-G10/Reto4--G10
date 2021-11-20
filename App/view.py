@@ -24,9 +24,13 @@ import config as cf
 import sys
 import controller
 from DISClib.ADT import list as lt
+from DISClib.ADT.graph import gr
 assert cf
+from DISClib.ADT import map as mp
+from DISClib.DataStructures import mapentry as me
 
-
+default_limit = 10000 
+sys.setrecursionlimit(default_limit*10)
 """
 La vista se encarga de la interacción con el usuario
 Presenta el menu de opciones y por cada seleccion
@@ -60,6 +64,11 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
+        analyzer = controller.init()
+        controller.loadData(analyzer)
+        print('Para el grafo con direccion Airports hay: ')
+        print(str(gr.numVertices(analyzer['airportsB'])) + ' aeropuertos')
+        print(str(gr.numEdges(analyzer['airportsB'])) + ' rutas aereas')
 
     elif int(inputs[0]) == 2:
         pass
