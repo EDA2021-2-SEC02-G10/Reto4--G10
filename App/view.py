@@ -67,8 +67,8 @@ while True:
         analyzer = controller.init()
         controller.loadData(analyzer)
         print('Para el grafo con direccion Airports hay: ')
-        print(str(gr.numVertices(analyzer['airportsB'])) + ' aeropuertos')
-        print(str(gr.numEdges(analyzer['airportsB'])) + ' rutas aereas')
+        print(str(gr.numVertices(analyzer['graphCities'])) + ' aeropuertos')
+        print(str(gr.numEdges(analyzer['graphCities'])) + ' rutas aereas')
 
     elif int(inputs[0]) == 2:
         pass

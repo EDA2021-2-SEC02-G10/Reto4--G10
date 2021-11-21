@@ -47,6 +47,8 @@ def loadData(analyzer):
 
     loadRoutes(analyzer)
     model.fillAirportsB(analyzer)
+    loadCities(analyzer)
+    loadAirports(analyzer)
 
     return analyzer
 
@@ -61,6 +63,27 @@ def loadRoutes(analyzer):
 
     return analyzer
 
+
+def loadCities(analyzer):
+
+    citiesfile = cf.data_dir + 'worldcities.csv'
+    input_file = csv.DictReader(open(citiesfile, encoding="utf-8"))
+    for row in input_file:
+        model.loadCities(analyzer, row['city'], float(row['lat']),
+                         float(row['lng']), row['country'])
+
+    return analyzer
+
+
+def loadAirports(analyzer):
+
+    airportsfile = cf.data_dir + 'airports_full.csv'
+    input_file = csv.DictReader(open(airportsfile, encoding="utf-8"))
+    for row in input_file:
+        model.loadAirports(analyzer, row['Name'], row['City'], row['Country'], row['IATA'],
+                           float(row['Latitude']), float(row['Longitude']))
+
+    return analyzer
 
 # Funciones de ordenamiento
 

@@ -31,7 +31,9 @@ from DISClib.ADT import map as mp
 from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import shellsort as sa
 from DISClib.ADT.graph import gr
+from math import radians, cos, sin, asin, sqrt
 assert cf
+
 
 """
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
@@ -58,52 +60,31 @@ def newAnalyzer():
                                         size=14000,
                                         comparefunction=compareAirportsB)
 
-    analyzer['cities'] = gr.newGraph(datastructure='ADJ_LIST',
-                                     directed=False,
-                                     size=14000,
-                                     comparefunction=compareCities)
+    analyzer['graphCities'] = gr.newGraph(datastructure='ADJ_LIST',
+                                          directed=False,
+                                          size=14000,
+                                          comparefunction=compareCities)
 
     analyzer['check'] = mp.newMap(1400,
                                   maptype='CHAINING',
                                   loadfactor=4.0,
                                   comparefunction=compareA)
 
+    analyzer['cities'] = mp.newMap(1400,
+                                   maptype='CHAINING',
+                                   loadfactor=4.0,
+                                   comparefunction=compareA)
+
+    analyzer['airports'] = mp.newMap(1400,
+                                     maptype='CHAINING',
+                                     loadfactor=4.0,
+                                     comparefunction=compareA)
+
     return analyzer
 
 
 # Funciones para agregar informacion al catalogo
 
-
-def addAirport(analyzer, airport):
-
-    if not gr.containsVertex(analyzer['airports'], airport):
-        gr.insertVertex(analyzer['airports'], airport)
-    return analyzer
-
-
-def addConection(analyzer, air1, air2, distance):
-
-    edge = gr.getEdge(analyzer['airports'], air1, air2)
-    if edge is None:
-        gr.addEdge(analyzer['airports'], air1, air2, distance)
-
-    return analyzer
-
-
-def addAirportB(analyzer, airport):
-
-    if not gr.containsVertex(analyzer['airportsB'], airport):
-        gr.insertVertex(analyzer['airportsB'], airport)
-    return analyzer
-
-
-def addConectionB(analyzer, air1, air2, distance):
-
-    edge = gr.getEdge(analyzer['airportsB'], air1, air2)
-    if edge is None:
-        gr.addEdge(analyzer['airportsB'], air1, air2, distance)
-
-    return analyzer
 
 # Carga de vertices, arco y peso en el grafo airports
 
@@ -159,7 +140,99 @@ def fillAirportsB(analyzer):
             addAirportB(analyzer, destination)
             addConectionB(analyzer, departure, destination, lt.getElement(value, 1))
 
-# Funciones para creacion de datos
+# Llena el mapa de ciudades
+
+
+def loadCities(analyzer, city, lat, lng, country):
+
+    if mp.contains(analyzer['cities'], city) is False:
+        dictCity = {}
+        lstCity = lt.newList('ARRAY_LIST')
+        dictCity['city'] = city
+        dictCity['lat'] = lat
+        dictCity['lng'] = lng
+        dictCity['country'] = country
+        lt.addLast(lstCity, dictCity)
+        mp.put(analyzer['cities'], city, dictCity)
+
+
+# Crea el 3er grafo a partir del archivo de aeropuertos y el mapa de cities
+
+def loadAirports(analyzer, name, city, country, airport, lat, lng):
+
+    # Se crea el mapa de airports para sacar la informacion
+    if mp.contains(analyzer['airports'], airport) is False:
+        dictAir = {}
+        lstAir = lt.newList('ARRAY_LIST')
+        dictAir['name'] = name
+        dictAir['city'] = city
+        dictAir['country'] = country
+        dictAir['airport'] = airport
+        dictAir['lat'] = lat
+        dictAir['lng'] = lng
+        lt.addLast(lstAir, dictAir)
+        mp.put(analyzer['airports'], city, dictAir)
+
+
+    # Ahora se crea el grafo de graphCities
+
+    cityDataEntry = mp.get(analyzer['cities'], city)
+    if cityDataEntry is not None:
+        cityData = me.getValue(cityDataEntry)
+        distance = haversine(lng, lat, cityData['lng'], cityData['lat'])
+        addAirportC(analyzer, airport)
+        addAirportC(analyzer, city)
+        addConectionC(analyzer, airport, city, distance)
+        addConectionC(analyzer, city, airport, distance)
+
+
+def addAirport(analyzer, airport):
+
+    if not gr.containsVertex(analyzer['airports'], airport):
+        gr.insertVertex(analyzer['airports'], airport)
+    return analyzer
+
+
+def addConection(analyzer, air1, air2, distance):
+
+    edge = gr.getEdge(analyzer['airports'], air1, air2)
+    if edge is None:
+        gr.addEdge(analyzer['airports'], air1, air2, distance)
+
+    return analyzer
+
+
+def addAirportB(analyzer, airport):
+
+    if not gr.containsVertex(analyzer['airportsB'], airport):
+        gr.insertVertex(analyzer['airportsB'], airport)
+    return analyzer
+
+
+def addConectionB(analyzer, air1, air2, distance):
+
+    edge = gr.getEdge(analyzer['airportsB'], air1, air2)
+    if edge is None:
+        gr.addEdge(analyzer['airportsB'], air1, air2, distance)
+
+    return analyzer
+
+
+def addAirportC(analyzer, vertex):
+
+    if not gr.containsVertex(analyzer['graphCities'], vertex):
+        gr.insertVertex(analyzer['graphCities'], vertex)
+    return analyzer
+
+
+def addConectionC(analyzer, ver1, ver2, distance):
+
+    edge = gr.getEdge(analyzer['graphCities'], ver1, ver2)
+    if edge is None:
+        gr.addEdge(analyzer['graphCities'], ver1, ver2, distance)
+
+    return analyzer
+
 
 # Funciones de consulta
 
@@ -210,4 +283,24 @@ def compareA(keyname, department):
 
 
 # Funciones de ordenamiento
+
+
+# Funciones de calculo
+
+
+def haversine(lon1, lat1, lon2, lat2):
+    """
+    Calculate the great circle distance in kilometers between two points 
+    on the earth (specified in decimal degrees)
+    """
+    # convert decimal degrees to radians 
+    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+
+    # haversine formula 
+    dlon = lon2 - lon1 
+    dlat = lat2 - lat1 
+    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+    c = 2 * asin(sqrt(a)) 
+    r = 6371 # Radius of earth in kilometers. Use 3956 for miles. Determines return value units.
+    return c * r
 
