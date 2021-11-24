@@ -25,12 +25,13 @@
  """
 
 
+from DISClib.DataStructures.chaininghashtable import contains
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
 from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import shellsort as sa
-from DISClib.ADT.graph import gr
+from DISClib.ADT.graph import containsVertex, gr
 from math import radians, cos, sin, asin, sqrt
 assert cf
 
@@ -75,10 +76,10 @@ def newAnalyzer():
                                    loadfactor=4.0,
                                    comparefunction=compareA)
 
-    analyzer['airports'] = mp.newMap(1400,
-                                     maptype='CHAINING',
-                                     loadfactor=4.0,
-                                     comparefunction=compareA)
+    analyzer['airportsMap'] = mp.newMap(1400,
+                                        maptype='CHAINING',
+                                        loadfactor=4.0,
+                                        comparefunction=compareA)
 
     return analyzer
 
@@ -96,12 +97,12 @@ def loadRoutes(analyzer, airline, departure, destination, distance):
     """
     air1 = airline + ":" + departure
     air2 = airline + ":" + destination
-    #addAirport(analyzer, departure)
-    #addAirport(analyzer, destination)
-    #addConection(analyzer, departure, destination, distance)
-    addAirport(analyzer, air1)
-    addAirport(analyzer, air2)
-    addConection(analyzer, air1, air2, distance)
+    addAirport(analyzer, departure)
+    addAirport(analyzer, destination)
+    addConection(analyzer, departure, destination, distance)
+    #addAirport(analyzer, air1)
+    #addAirport(analyzer, air2)
+    #addConection(analyzer, air1, air2, distance)
     #addConection(analyzer, air1, departure, 0)
     #addConection(analyzer, departure, air1, 0)
     #addConection(analyzer, air2, departure, 0)
@@ -161,7 +162,7 @@ def loadCities(analyzer, city, lat, lng, country):
 def loadAirports(analyzer, name, city, country, airport, lat, lng):
 
     # Se crea el mapa de airports para sacar la informacion
-    if mp.contains(analyzer['airports'], airport) is False:
+    if mp.contains(analyzer['airportsMap'], airport) is False:
         dictAir = {}
         lstAir = lt.newList('ARRAY_LIST')
         dictAir['name'] = name
@@ -171,7 +172,7 @@ def loadAirports(analyzer, name, city, country, airport, lat, lng):
         dictAir['lat'] = lat
         dictAir['lng'] = lng
         lt.addLast(lstAir, dictAir)
-        mp.put(analyzer['airports'], city, dictAir)
+        mp.put(analyzer['airportsMap'], city, dictAir)
 
 
     # Ahora se crea el grafo de graphCities
@@ -185,6 +186,15 @@ def loadAirports(analyzer, name, city, country, airport, lat, lng):
         addConectionC(analyzer, airport, city, distance)
         addConectionC(analyzer, city, airport, distance)
 
+"""
+    # Se hacen las conexiones con otros aeropuertos
+
+    if gr.containsVertex(analyzer['airports'], airport):
+        lstAd = gr.adjacents(analyzer['airports'], airport)
+        for element in lt.iterator(lstAd):
+            edge = gr.getEdge(analyzer['airports'], airport, element)
+            addConectionC(analyzer, airport, element, edge['weight'])
+"""
 
 def addAirport(analyzer, airport):
 
