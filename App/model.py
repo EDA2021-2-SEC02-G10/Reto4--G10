@@ -31,7 +31,8 @@ from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
 from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import shellsort as sa
-from DISClib.ADT.graph import containsVertex, gr
+from DISClib.ADT.graph import containsVertex, gr, indegree, outdegree
+from DISClib.Algorithms.Sorting import mergesort as ms
 from math import radians, cos, sin, asin, sqrt
 assert cf
 
@@ -183,7 +184,7 @@ def loadAirports(analyzer, name, city, country, airport, lat, lng):
         dictAir['lat'] = lat
         dictAir['lng'] = lng
         lt.addLast(lstAir, dictAir)
-        mp.put(analyzer['airportsMap'], city, dictAir)
+        mp.put(analyzer['airportsMap'], airport, dictAir)
 
 
     # Ahora se crea el grafo de graphCities
@@ -264,7 +265,47 @@ def addConectionC(analyzer, ver1, ver2, distance):
 # Funciones de consulta
 
 
-# REQ 3
+# REQ 1
+def interconexionPoints(analyzer):
+
+    # Grafo 1
+    lst1 = lt.newList('ARRAY_LIST')
+    for vertex in lt.iterator(gr.vertices(analyzer['airports'])):
+        degree = indegree(analyzer['airports'], vertex) + outdegree(analyzer['airports'], vertex)
+        temp = {}
+        temp[vertex] = degree
+        lt.addLast(lst1, temp)
+
+    sorted_list1 = ms.sort(lst1, cmpVertexByDegree)
+    topValueDict1 = lt.getElement(sorted_list1, 1)
+    topValue1 = (list(topValueDict1.values()))[0]
+    finalList1 = lt.newList('ARRAY_LIST')
+    for i in range(1, 51):
+        temp = lt.getElement(sorted_list1, i)
+        value = (list(temp.values()))[0]
+        if value == topValue1:
+            lt.addLast(finalList1, temp)
+
+    # Grafo 2
+    lst2 = lt.newList('ARRAY_LIST')
+    for vertex in lt.iterator(gr.vertices(analyzer['airportsB'])):
+        degree = (gr.degree(analyzer['airportsB'], vertex))//2
+        temp = {}
+        temp[vertex] = degree
+        lt.addLast(lst2, temp)
+
+    sorted_list2 = ms.sort(lst2, cmpVertexByDegree)
+    topValueDict2 = lt.getElement(sorted_list2, 1)
+    topValue2 = (list(topValueDict2.values()))[0]
+    finalList2 = lt.newList('ARRAY_LIST')
+    for i in range(1, 51):
+        temp = lt.getElement(sorted_list2, i)
+        value = (list(temp.values()))[0]
+        if value == topValue2:
+            lt.addLast(finalList2, temp)
+
+    return finalList1, finalList2, topValue1, topValue2
+
 
 
 
@@ -317,6 +358,19 @@ def compareA(keyname, department):
 
 
 # Funciones de ordenamiento
+
+
+def cmpVertexByDegree(element1, element2):
+
+    n1 = (list(element1.values()))[0]
+    n2 = (list(element2.values()))[0]
+    r = True
+    if n1 > n2:
+        r = True
+    else:
+        r = False
+
+    return r
 
 
 # Funciones de calculo

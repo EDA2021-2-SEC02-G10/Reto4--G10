@@ -39,6 +39,32 @@ operación solicitada
 """
 
 
+def printResults1(analyzer, result):
+
+    lst1 = result[0]
+    lst2 = result[1]
+    top1 = result[2]
+    top2 = result[3]
+    print('Para el grafo dirigido, el (los) aeropuerto(s) con mas interconexiones tienen: ')
+    print(str(top1) + ' interconexiones')
+    print('Los aeropuertos con este numero de interconexiones son: ')
+    for airport in lt.iterator(lst1):
+        print(airport)
+        name = (list(airport.keys()))[0]
+        print(name)
+        dataEntry = mp.get(analyzer['airportsMap'], name)
+        data = me.getValue(dataEntry)
+        print(data)
+
+    print('Para el grafo no dirigido, el (los) aeropuerto(s) con mas interconexiones tienen: ')
+    print(str(top2) + ' interconexiones')
+    print('Los aeropuertos con este numero de interconexiones son: ')
+    for airport in lt.iterator(lst2):
+        name = (list(airport.keys()))[0]
+        dataEntry = mp.get(analyzer['airportsMap'], name)
+        data = me.getValue(dataEntry)
+        print(data)
+
 def printMenu():
     print("-----------------------------------------------------------------------------")
     print("Bienvenido")
@@ -88,7 +114,9 @@ while True:
         print(me.getValue(airportsentry))
 
     elif int(inputs[0]) == 2:
-        pass
+
+        result = controller.interconexionPoints(analyzer)
+        printResults1(analyzer, result)
 
     elif int(inputs[0]) == 3:
         pass

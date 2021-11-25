@@ -88,3 +88,8 @@ def loadAirports(analyzer):
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
+
+
+def interconexionPoints(analyzer):
+
+    return model.interconexionPoints(analyzer)
