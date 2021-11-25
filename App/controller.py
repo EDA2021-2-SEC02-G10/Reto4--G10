@@ -70,7 +70,7 @@ def loadCities(analyzer):
     input_file = csv.DictReader(open(citiesfile, encoding="utf-8"))
     for row in input_file:
         model.loadCities(analyzer, row['city'], float(row['lat']),
-                         float(row['lng']), row['country'])
+                         float(row['lng']), row['country'], row['id'])
 
     return analyzer
 

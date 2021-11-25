@@ -144,7 +144,7 @@ def fillAirportsB(analyzer):
 # Llena el mapa de ciudades
 
 
-def loadCities(analyzer, city, lat, lng, country):
+def loadCities(analyzer, city, lat, lng, country, n):
 
     if mp.contains(analyzer['cities'], city) is False:
         dictCity = {}
@@ -153,8 +153,19 @@ def loadCities(analyzer, city, lat, lng, country):
         dictCity['lat'] = lat
         dictCity['lng'] = lng
         dictCity['country'] = country
+        dictCity['id'] = n
         lt.addLast(lstCity, dictCity)
-        mp.put(analyzer['cities'], city, dictCity)
+        mp.put(analyzer['cities'], city, lstCity)
+    else:
+        entry = mp.get(analyzer['cities'], city)
+        lst = me.getValue(entry)
+        dictCity = {}
+        dictCity['city'] = city
+        dictCity['lat'] = lat
+        dictCity['lng'] = lng
+        dictCity['country'] = country
+        dictCity['id'] = n
+        lt.addLast(lst, dictCity)
 
 
 # Crea el 3er grafo a partir del archivo de aeropuertos y el mapa de cities
@@ -179,7 +190,12 @@ def loadAirports(analyzer, name, city, country, airport, lat, lng):
 
     cityDataEntry = mp.get(analyzer['cities'], city)
     if cityDataEntry is not None:
-        cityData = me.getValue(cityDataEntry)
+        cityDataLst = me.getValue(cityDataEntry)
+        for element in lt.iterator(cityDataLst):
+            if element['country'] == country:
+                cityData = element
+            else:
+                cityData = lt.getElement(cityDataLst, 1)
         distance = haversine(lng, lat, cityData['lng'], cityData['lat'])
         addAirportC(analyzer, airport)
         addAirportC(analyzer, city)
@@ -195,6 +211,7 @@ def loadAirports(analyzer, name, city, country, airport, lat, lng):
             edge = gr.getEdge(analyzer['airports'], airport, element)
             addConectionC(analyzer, airport, element, edge['weight'])
 """
+
 
 def addAirport(analyzer, airport):
 
@@ -245,6 +262,13 @@ def addConectionC(analyzer, ver1, ver2, distance):
 
 
 # Funciones de consulta
+
+
+# REQ 3
+
+
+
+
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
