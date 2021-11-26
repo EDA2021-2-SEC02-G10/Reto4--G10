@@ -119,7 +119,6 @@ while True:
         airport1 = lt.getElement(airports, 1)
         airportsentry = mp.get(analyzer['airportsMap'], airport1)
         print('El primer aeropuerto cargado es ' + airport1 + ' y sus datos asociados son: ')
-        print(me.getValue(airportsentry))
 
     elif int(inputs[0]) == 2:
 
@@ -144,7 +143,9 @@ while True:
             n = int(input('Dadas las ciudades en orden, digite el numero de la ciudad de origen que desea buscar (1 o 2 o 3... o n): '))
             city1f = lt.getElement(city1Lst, n)
         else:
-            city1f = city1
+            entry = mp.get(analyzer['cities'], city1)
+            lst = me.getValue(entry)
+            city1f = lt.getElement(lst, 1)
 
         size2 = lt.size(city2Lst)
         if size2 > 1:
@@ -153,7 +154,11 @@ while True:
             n = int(input('Dadas las ciudades en orden, digite el numero de la ciudad de llegada que desea buscar (1 o 2 o 3... o n): '))
             city2f = lt.getElement(city2Lst, n)
         else:
-            city2f = city2
+            entry = mp.get(analyzer['cities'], city2)
+            lst = me.getValue(entry)
+            city2f = lt.getElement(lst, 1)
+
+        result = controller.routecities(analyzer, city1f, city2f)
 
     elif int(inputs[0]) == 5:
         pass

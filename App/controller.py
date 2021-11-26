@@ -99,3 +99,8 @@ def affectedAirports(analyzer, airport):
 
     return model.affectedAirports(analyzer, airport)
 
+
+def routecities(analyzer, city1, city2):
+
+    return model.routeCities(analyzer, city1, city2)
+

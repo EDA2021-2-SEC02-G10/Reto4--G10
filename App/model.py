@@ -308,6 +308,13 @@ def interconexionPoints(analyzer):
 
     return finalList1, finalList2, topValue1, topValue2
 
+# REQ 3
+
+
+def routeCities(analyzer, city1, city2):
+
+    print(city1, city2)
+
 
 # REQ 5
 def affectedAirports(analyzer, airport):
