@@ -35,6 +35,7 @@ from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import shellsort as sa
 from DISClib.ADT.graph import adjacents, containsVertex, gr, indegree, outdegree
 from DISClib.Algorithms.Sorting import mergesort as ms
+from DISClib.Algorithms.Graphs import dijsktra as dk
 from math import radians, cos, sin, asin, sqrt
 assert cf
 
@@ -164,8 +165,8 @@ def loadCities(analyzer, city, lat, lng, country, n):
         lst = me.getValue(entry)
         dictCity = {}
         dictCity['city'] = city
-        dictCity['lat'] = lat
-        dictCity['lng'] = lng
+        dictCity['lat'] = float(lat)
+        dictCity['lng'] = float(lng)
         dictCity['country'] = country
         dictCity['id'] = n
         lt.addLast(lst, dictCity)
@@ -183,8 +184,8 @@ def loadAirports(analyzer, name, city, country, airport, lat, lng):
         dictAir['city'] = city
         dictAir['country'] = country
         dictAir['airport'] = airport
-        dictAir['lat'] = lat
-        dictAir['lng'] = lng
+        dictAir['lat'] = float(lat)
+        dictAir['lng'] = float(lng)
         lt.addLast(lstAir, dictAir)
         mp.put(analyzer['airportsMap'], airport, dictAir)
 
@@ -313,8 +314,31 @@ def interconexionPoints(analyzer):
 
 def routeCities(analyzer, city1, city2):
 
-    print(city1, city2)
+    # Calculo del aeropuerto mas cercano a cada ciudad
+    airports = mp.keySet(analyzer['airportsMap'])
+    distance1Min = 100000000000000000000000000000000
+    distance2Min = 100000000000000000000000000000000
+    minAirport1 = None
+    minAirport2 = None
+    for airport in lt.iterator(airports):
+        airportEntry = mp.get(analyzer['airportsMap'], airport)
+        airportData = me.getValue(airportEntry)
+        distance1 = None
+        distance2 = None
+        distance1 = haversine(city1['lng'], city1['lat'], airportData['lng'], airportData['lat'])
+        distance2 = haversine(city2['lng'], city2['lat'], airportData['lng'], airportData['lat'])
+        if distance1 < distance1Min:
+            distance1Min = distance1
+            minAirport1 = airport
+        if distance2 < distance2Min:
+            distance2Min = distance2
+            minAirport2 = airport
 
+    # Obtencion de la distancia del trayecto
+    search = dk.Dijkstra(analyzer['airports'], minAirport1)
+    path = dk.pathTo(search, minAirport2)
+
+    return minAirport1, minAirport2, path, distance1Min, distance2Min
 
 # REQ 5
 def affectedAirports(analyzer, airport):

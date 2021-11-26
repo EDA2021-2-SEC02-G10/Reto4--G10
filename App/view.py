@@ -24,6 +24,7 @@ import config as cf
 import sys
 import controller
 from DISClib.ADT import list as lt
+from DISClib.ADT import stack as st
 from DISClib.ADT.graph import gr
 assert cf
 from DISClib.ADT import map as mp
@@ -64,6 +65,26 @@ def printResults1(analyzer, result):
         dataEntry = mp.get(analyzer['airportsMap'], name)
         data = me.getValue(dataEntry)
         print(data)
+
+
+def printResults3(result):
+
+    total = 0
+    stack = result[2]
+    print('El aeropuerto de salida es: ' + str(result[0]))
+    print('El aeropuerto de llegada es: ' + str(result[1]))
+    print('De la ciudad de salida al aeropuerto asociado hay: ' + str(result[3]) + ' km')
+    total += float(result[3])
+    print('La ruta seguida para llegar al aeropuerto de destino es: ')
+    while st.isEmpty(stack) is False:
+        top = st.pop(stack)
+        print('Salida: ' + str(top['vertexA']))
+        print('Llegada: ' + str(top['vertexB']))
+        print('Distancia de ruta: ' + str(top['weight']) + ' km')
+        total += float(top['weight'])
+    print('De la ciudad de llegada al aeropuerto asociado hay: ' + str(result[4]) + ' km')
+    total += float(result[4])
+    print('La distancia total recorrida es de: ' + str(total) + ' km')
 
 
 def printResults5(result):
@@ -159,6 +180,7 @@ while True:
             city2f = lt.getElement(lst, 1)
 
         result = controller.routecities(analyzer, city1f, city2f)
+        printResults3(result)
 
     elif int(inputs[0]) == 5:
         pass
