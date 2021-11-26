@@ -93,3 +93,9 @@ def loadAirports(analyzer):
 def interconexionPoints(analyzer):
 
     return model.interconexionPoints(analyzer)
+
+
+def affectedAirports(analyzer, airport):
+
+    return model.affectedAirports(analyzer, airport)
+

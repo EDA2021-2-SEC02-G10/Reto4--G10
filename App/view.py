@@ -65,6 +65,14 @@ def printResults1(analyzer, result):
         data = me.getValue(dataEntry)
         print(data)
 
+
+def printResults5(result):
+
+    print('El numero de aeropuertos afectados por el cierre es: ' + str(result[0]))
+    print('Los aeropuertos afectados por el cierre son: ')
+    print(result[1])
+
+
 def printMenu():
     print("-----------------------------------------------------------------------------")
     print("Bienvenido")
@@ -151,7 +159,10 @@ while True:
         pass
 
     elif int(inputs[0]) == 6:
-        pass
+
+        airport = input('Codigo IATA del aeropierto a cerrar: ')
+        result = controller.affectedAirports(analyzer, airport)
+        printResults5(result)
 
     elif int(inputs[0]) == 7:
         pass

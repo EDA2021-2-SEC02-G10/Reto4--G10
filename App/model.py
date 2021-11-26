@@ -25,13 +25,15 @@
  """
 
 
+from DISClib.DataStructures.arraylist import size
 from DISClib.DataStructures.chaininghashtable import contains
 import config as cf
 from DISClib.ADT import list as lt
+from DISClib.ADT import stack as st
 from DISClib.ADT import map as mp
 from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import shellsort as sa
-from DISClib.ADT.graph import containsVertex, gr, indegree, outdegree
+from DISClib.ADT.graph import adjacents, containsVertex, gr, indegree, outdegree
 from DISClib.Algorithms.Sorting import mergesort as ms
 from math import radians, cos, sin, asin, sqrt
 assert cf
@@ -307,8 +309,32 @@ def interconexionPoints(analyzer):
     return finalList1, finalList2, topValue1, topValue2
 
 
+# REQ 5
+def affectedAirports(analyzer, airport):
 
+    check = []
+    stack = st.newStack('SINGLE_LINKED')
+    inicial = gr.adjacents(analyzer['airports'], airport)
+    final = lt.newList('ARRAY_LIST')
+    counter = 0
+    for element in lt.iterator(inicial):
+        st.push(stack, element)
+        check.append(element)
 
+    while st.isEmpty(stack) is False:
+
+        adj = None
+        top = None
+        top = st.pop(stack)
+        lt.addLast(final, top)
+        counter += 1
+        adj = gr.adjacents(analyzer['airports'], top)
+        for element in lt.iterator(adj):
+            if element not in check:
+                st.push(stack, element)
+                check.append(element)
+
+    return counter, final     
 
 
 # Funciones utilizadas para comparar elementos dentro de una lista
