@@ -25,6 +25,8 @@
  """
 
 
+from DISClib.Algorithms.Graphs.scc import KosarajuSCC, stronglyConnected, connectedComponents
+from DISClib.Algorithms.Graphs.prim import PrimMST
 from DISClib.DataStructures.arraylist import size
 from DISClib.DataStructures.chaininghashtable import contains
 import config as cf
@@ -309,6 +311,17 @@ def interconexionPoints(analyzer):
 
     return finalList1, finalList2, topValue1, topValue2
 
+#REQ 2
+
+def Clusters (analyzer,codigo1,codigo2):
+    cantidad_fuertemende_conectados = 0
+    Kosaraju = KosarajuSCC(analyzer['airports'])
+    aeropuertos_fuertemente_conectados = stronglyConnected(Kosaraju,codigo1,codigo2)
+    
+    cantidad_fuertemende_conectados += connectedComponents(Kosaraju)
+    
+    return (aeropuertos_fuertemente_conectados,cantidad_fuertemende_conectados)
+
 # REQ 3
 
 
@@ -340,6 +353,10 @@ def routeCities(analyzer, city1, city2):
 
     return minAirport1, minAirport2, path, distance1Min, distance2Min
 
+#REQ 4
+def Millas_viajero (analyzer, ciudad, millas):
+    millaskm = millas*1.60
+    MST = PrimMST(analyzer[''])
 # REQ 5
 def affectedAirports(analyzer, airport):
 

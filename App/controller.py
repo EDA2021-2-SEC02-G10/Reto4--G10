@@ -94,6 +94,9 @@ def interconexionPoints(analyzer):
 
     return model.interconexionPoints(analyzer)
 
+def Clusters (analyzer, codigo1, codigo2):
+
+    return model.Clusters(analyzer,codigo1,codigo2)
 
 def affectedAirports(analyzer, airport):
 

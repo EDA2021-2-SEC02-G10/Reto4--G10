@@ -147,7 +147,14 @@ while True:
         printResults1(analyzer, result)
 
     elif int(inputs[0]) == 3:
-        pass
+        codigo1 = input('Ingrese el código IATA del primer aeropuerto: ')
+        codigo2 = input ('Ingrese el código IATA del segundo aeropuerto: ')
+        result =controller.Clusters(analyzer,codigo1,codigo2)
+        if (result[0]) is True:
+            print('Los dos aeropuertos están en el mismo clúster.')
+        else:
+            print('Los dos aeropuertos no están en el mismo clúster.')
+        print('Hay ' + str(result[1]) + ' clústeres en la red de transporte aéreo.')
 
     elif int(inputs[0]) == 4:
 
