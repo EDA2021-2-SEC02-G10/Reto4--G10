@@ -39,6 +39,8 @@ from DISClib.ADT.graph import adjacents, containsVertex, gr, indegree, outdegree
 from DISClib.Algorithms.Sorting import mergesort as ms
 from DISClib.Algorithms.Graphs import dijsktra as dk
 from math import radians, cos, sin, asin, sqrt
+import folium 
+import webbrowser
 assert cf
 
 
@@ -101,18 +103,10 @@ def loadRoutes(analyzer, airline, departure, destination, distance):
     Formato de aeropuertos: IATA-Airport
     Ejemplo: 2B-AER y 2B-KZN, para la primera fila en routes_full
     """
-    air1 = airline + ":" + departure
-    air2 = airline + ":" + destination
+
     addAirport(analyzer, departure)
     addAirport(analyzer, destination)
     addConection(analyzer, departure, destination, distance)
-    #addAirport(analyzer, air1)
-    #addAirport(analyzer, air2)
-    #addConection(analyzer, air1, air2, distance)
-    #addConection(analyzer, air1, departure, 0)
-    #addConection(analyzer, departure, air1, 0)
-    #addConection(analyzer, air2, departure, 0)
-    #addConection(analyzer, departure, air2, 0)
 
     # Se agregan los checks a la tabla de hash para crear el mapa de ambas direcciones
     check1 = departure + "-" + destination
@@ -285,7 +279,7 @@ def interconexionPoints(analyzer):
     topValueDict1 = lt.getElement(sorted_list1, 1)
     topValue1 = (list(topValueDict1.values()))[0]
     finalList1 = lt.newList('ARRAY_LIST')
-    for i in range(1, 51):
+    for i in range(1, 7):
         temp = lt.getElement(sorted_list1, i)
         value = (list(temp.values()))[0]
         if value == topValue1:
@@ -303,7 +297,7 @@ def interconexionPoints(analyzer):
     topValueDict2 = lt.getElement(sorted_list2, 1)
     topValue2 = (list(topValueDict2.values()))[0]
     finalList2 = lt.newList('ARRAY_LIST')
-    for i in range(1, 51):
+    for i in range(1, 7):
         temp = lt.getElement(sorted_list2, i)
         value = (list(temp.values()))[0]
         if value == topValue2:
@@ -354,10 +348,14 @@ def routeCities(analyzer, city1, city2):
     return minAirport1, minAirport2, path, distance1Min, distance2Min
 
 #REQ 4
+
 def Millas_viajero (analyzer, ciudad, millas):
     millaskm = millas*1.60
     MST = PrimMST(analyzer[''])
+
+
 # REQ 5
+
 def affectedAirports(analyzer, airport):
 
     check = []
@@ -382,8 +380,28 @@ def affectedAirports(analyzer, airport):
                 st.push(stack, element)
                 check.append(element)
 
-    return counter, final     
+    return counter, final
 
+
+# REQ 7
+
+def seeRequirements(analyzer, data1, data2, data3, data4, data5):
+
+    # REQ 1
+    lstReq1 = data1[0]
+    myMap = folium.Map()
+    for airport in lt.iterator(lstReq1):
+
+        name = (list(airport.keys()))[0]
+        print(name)
+        airportDataEntry = mp.get(analyzer['airportsMap'], name)
+        airportData = me.getValue(airportDataEntry)
+        lat = airportData['lat']
+        lng = airportData['lng']
+        folium.Marker([lat, lng], popup='TopAirport').add_to(myMap)
+
+    myMap.save("map.html")
+    webbrowser.open("map.html")
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 

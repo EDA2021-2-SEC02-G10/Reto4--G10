@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_5d19e9d7e20d41bfa2e95027b81f3911 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+            <div class="folium-map" id="map_5d19e9d7e20d41bfa2e95027b81f3911" ></div>
+        
+</body>
+<script>    
+    
+            var map_5d19e9d7e20d41bfa2e95027b81f3911 = L.map(
+                "map_5d19e9d7e20d41bfa2e95027b81f3911",
+                {
+                    center: [0, 0],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 1,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_218e7691014b410ba6f4d11139257b6f = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_5d19e9d7e20d41bfa2e95027b81f3911);
+        
+    
+            var marker_e6bdd2b348654272938566636f2b3947 = L.marker(
+                [59.8003006, 30.26250076],
+                {}
+            ).addTo(map_5d19e9d7e20d41bfa2e95027b81f3911);
+        
+    
+        var popup_621d0b77e9ac4c46ae7927adaf48856c = L.popup({"maxWidth": "100%"});
+
+        
+            var html_cfa548f4e040439d8d09f1a23ff162eb = $(`<div id="html_cfa548f4e040439d8d09f1a23ff162eb" style="width: 100.0%; height: 100.0%;">TopAirport</div>`)[0];
+            popup_621d0b77e9ac4c46ae7927adaf48856c.setContent(html_cfa548f4e040439d8d09f1a23ff162eb);
+        
+
+        marker_e6bdd2b348654272938566636f2b3947.bindPopup(popup_621d0b77e9ac4c46ae7927adaf48856c)
+        ;
+
+        
+    
+    
+            var marker_f17e87b01d2e4e338d1b2d99fe67bf2a = L.marker(
+                [25.25279999, 55.36439896],
+                {}
+            ).addTo(map_5d19e9d7e20d41bfa2e95027b81f3911);
+        
+    
+        var popup_70769e834761422aa6785076f2301770 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_9f43ee8e866b4cffa3f25d680e2722bf = $(`<div id="html_9f43ee8e866b4cffa3f25d680e2722bf" style="width: 100.0%; height: 100.0%;">TopAirport</div>`)[0];
+            popup_70769e834761422aa6785076f2301770.setContent(html_9f43ee8e866b4cffa3f25d680e2722bf);
+        
+
+        marker_f17e87b01d2e4e338d1b2d99fe67bf2a.bindPopup(popup_70769e834761422aa6785076f2301770)
+        ;
+
+        
+    
+</script>

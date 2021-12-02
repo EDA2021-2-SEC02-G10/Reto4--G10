@@ -20,6 +20,7 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
+from typing import NewType
 import config as cf
 import sys
 import controller
@@ -50,7 +51,6 @@ def printResults1(analyzer, result):
     print(str(top1) + ' interconexiones')
     print('Los aeropuertos con este numero de interconexiones son: ')
     for airport in lt.iterator(lst1):
-        print(airport)
         name = (list(airport.keys()))[0]
         print(name)
         dataEntry = mp.get(analyzer['airportsMap'], name)
@@ -110,6 +110,12 @@ def printMenu():
 
 
 catalog = None
+result1 = None
+result2 = None
+result3 = None
+result4 = None
+result5 = None
+
 
 """
 Menu principal
@@ -140,21 +146,23 @@ while True:
         airport1 = lt.getElement(airports, 1)
         airportsentry = mp.get(analyzer['airportsMap'], airport1)
         print('El primer aeropuerto cargado es ' + airport1 + ' y sus datos asociados son: ')
+        print(me.getValue(airportsentry))
 
     elif int(inputs[0]) == 2:
 
-        result = controller.interconexionPoints(analyzer)
-        printResults1(analyzer, result)
+        result1 = controller.interconexionPoints(analyzer)
+        printResults1(analyzer, result1)
 
     elif int(inputs[0]) == 3:
+
         codigo1 = input('Ingrese el código IATA del primer aeropuerto: ')
-        codigo2 = input ('Ingrese el código IATA del segundo aeropuerto: ')
-        result =controller.Clusters(analyzer,codigo1,codigo2)
-        if (result[0]) is True:
+        codigo2 = input('Ingrese el código IATA del segundo aeropuerto: ')
+        result2 = controller.Clusters(analyzer, codigo1, codigo2)
+        if (result2[0]) is True:
             print('Los dos aeropuertos están en el mismo clúster.')
         else:
             print('Los dos aeropuertos no están en el mismo clúster.')
-        print('Hay ' + str(result[1]) + ' clústeres en la red de transporte aéreo.')
+        print('Hay ' + str(result2[1]) + ' clústeres en la red de transporte aéreo.')
 
     elif int(inputs[0]) == 4:
 
@@ -186,23 +194,26 @@ while True:
             lst = me.getValue(entry)
             city2f = lt.getElement(lst, 1)
 
-        result = controller.routecities(analyzer, city1f, city2f)
-        printResults3(result)
+        result3 = controller.routecities(analyzer, city1f, city2f)
+        printResults3(result3)
 
     elif int(inputs[0]) == 5:
-        pass
+
+        result4 = None
 
     elif int(inputs[0]) == 6:
 
         airport = input('Codigo IATA del aeropierto a cerrar: ')
-        result = controller.affectedAirports(analyzer, airport)
-        printResults5(result)
+        result5 = controller.affectedAirports(analyzer, airport)
+        printResults5(result5)
 
     elif int(inputs[0]) == 7:
+
         pass
 
     elif int(inputs[0]) == 8:
-        pass
+
+        controller.seeRequirements(analyzer, result1, result2, result3, result4, result5)
 
     else:
         sys.exit(0)

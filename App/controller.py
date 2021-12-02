@@ -55,7 +55,7 @@ def loadData(analyzer):
 
 def loadRoutes(analyzer):
 
-    routesfile = cf.data_dir + 'routes_full.csv'
+    routesfile = cf.data_dir + 'routes-utf8-small.csv'
     input_file = csv.DictReader(open(routesfile, encoding="utf-8"))
     for row in input_file:
         model.loadRoutes(analyzer, row['Airline'], row['Departure'],
@@ -66,7 +66,7 @@ def loadRoutes(analyzer):
 
 def loadCities(analyzer):
 
-    citiesfile = cf.data_dir + 'worldcities.csv'
+    citiesfile = cf.data_dir + 'worldcities-utf8.csv'
     input_file = csv.DictReader(open(citiesfile, encoding="utf-8"))
     for row in input_file:
         model.loadCities(analyzer, row['city'], float(row['lat']),
@@ -77,7 +77,7 @@ def loadCities(analyzer):
 
 def loadAirports(analyzer):
 
-    airportsfile = cf.data_dir + 'airports_full.csv'
+    airportsfile = cf.data_dir + 'airports-utf8-small.csv'
     input_file = csv.DictReader(open(airportsfile, encoding="utf-8"))
     for row in input_file:
         model.loadAirports(analyzer, row['Name'], row['City'], row['Country'], row['IATA'],
@@ -94,9 +94,11 @@ def interconexionPoints(analyzer):
 
     return model.interconexionPoints(analyzer)
 
+
 def Clusters (analyzer, codigo1, codigo2):
 
     return model.Clusters(analyzer,codigo1,codigo2)
+
 
 def affectedAirports(analyzer, airport):
 
@@ -107,3 +109,7 @@ def routecities(analyzer, city1, city2):
 
     return model.routeCities(analyzer, city1, city2)
 
+
+def seeRequirements(analyzer, data1, data2, data3, data4, data5):
+
+    return model.seeRequirements(analyzer, data1, data2, data3, data4, data5)
