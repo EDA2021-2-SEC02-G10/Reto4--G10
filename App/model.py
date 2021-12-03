@@ -41,8 +41,14 @@ from DISClib.Algorithms.Graphs import dijsktra as dk
 from math import radians, cos, sin, asin, sqrt
 import folium 
 import webbrowser
+from amadeus import Client, ResponseError
+import amadeus
 assert cf
 
+amadeus = Client(
+    client_id='LCmwDrZVpQGFwrn6mzzt9Qq2SolQAH6v',
+    client_secret='kaPXJqapidulSOhq'
+)
 
 """
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
@@ -184,7 +190,7 @@ def loadAirports(analyzer, name, city, country, airport, lat, lng):
         dictAir['lng'] = float(lng)
         lt.addLast(lstAir, dictAir)
         mp.put(analyzer['airportsMap'], airport, dictAir)
-        #addAirport(analyzer, airport)
+        addAirport(analyzer, airport)
 
 
     # Ahora se crea el grafo de graphCities
@@ -335,6 +341,9 @@ def routeCities(analyzer, city1, city2):
         distance2 = None
         distance1 = haversine(city1['lng'], city1['lat'], airportData['lng'], airportData['lat'])
         distance2 = haversine(city2['lng'], city2['lat'], airportData['lng'], airportData['lat'])
+        if gr.degree(analyzer['airports'], airport) == 0:
+            distance1 = 1000000000000000000000000000000000
+            distance2 = 1000000000000000000000000000000000
         if distance1 < distance1Min:
             distance1Min = distance1
             minAirport1 = airport
@@ -383,6 +392,21 @@ def affectedAirports(analyzer, airport):
 
     return counter, final
 
+
+# REQ 6
+
+def compareResults(analyzer, city1, city2):
+
+    lat1 = city1['lat']
+    lng1 = city1['lng']
+    lat2 = city2['lat']
+    lng2 = city2['lng']
+    airport1raw = amadeus.reference_data.locations.airports.get(longitude=lng1, latitude=lat1)
+    airport2raw = amadeus.reference_data.locations.airports.get(longitude=lng2, latitude=lat2)
+    airport1 = (airport1raw.data)[1]['iataCode']
+    airport2 = (airport2raw.data)[1]['iataCode']
+    airport1Distance = [(airport1raw)[1]['lat'], airport1raw[1], ['lng']]
+    airport2Distance = [(airport2raw)[1]['lat'], airport2raw[1], ['lng']]
 
 # REQ 7
 

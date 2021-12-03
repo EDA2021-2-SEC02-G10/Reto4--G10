@@ -210,7 +210,35 @@ while True:
 
     elif int(inputs[0]) == 7:
 
-        pass
+        city1 = input('Nombre de la ciudad de origen: ')
+        city2 = input('Nombre de la ciudad de llegada: ')
+        city1LstEntry = mp.get(analyzer['cities'], city1)
+        city1Lst = me.getValue(city1LstEntry)
+        city2LstEntry = mp.get(analyzer['cities'], city2)
+        city2Lst = me.getValue(city2LstEntry)
+        size1 = lt.size(city1Lst)
+        if size1 > 1:
+            for element in lt.iterator(city1Lst):
+                print(element)
+            n = int(input('Dadas las ciudades en orden, digite el numero de la ciudad de origen que desea buscar (1 o 2 o 3... o n): '))
+            city1f = lt.getElement(city1Lst, n)
+        else:
+            entry = mp.get(analyzer['cities'], city1)
+            lst = me.getValue(entry)
+            city1f = lt.getElement(lst, 1)
+
+        size2 = lt.size(city2Lst)
+        if size2 > 1:
+            for element in lt.iterator(city2Lst):
+                print(element)
+            n = int(input('Dadas las ciudades en orden, digite el numero de la ciudad de llegada que desea buscar (1 o 2 o 3... o n): '))
+            city2f = lt.getElement(city2Lst, n)
+        else:
+            entry = mp.get(analyzer['cities'], city2)
+            lst = me.getValue(entry)
+            city2f = lt.getElement(lst, 1)
+
+        result6 = controller.compareResults(analyzer, city1f, city2f)
 
     elif int(inputs[0]) == 8:
 

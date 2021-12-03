@@ -55,7 +55,7 @@ def loadData(analyzer):
 
 def loadRoutes(analyzer):
 
-    routesfile = cf.data_dir + 'routes_full.csv'
+    routesfile = cf.data_dir + 'routes-utf8-small.csv'
     input_file = csv.DictReader(open(routesfile, encoding="utf-8"))
     for row in input_file:
         model.loadRoutes(analyzer, row['Airline'], row['Departure'],
@@ -77,7 +77,7 @@ def loadCities(analyzer):
 
 def loadAirports(analyzer):
 
-    airportsfile = cf.data_dir + 'airports_full.csv'
+    airportsfile = cf.data_dir + 'airports-utf8-small.csv'
     input_file = csv.DictReader(open(airportsfile, encoding="utf-8"))
     for row in input_file:
         model.loadAirports(analyzer, row['Name'], row['City'], row['Country'], row['IATA'],
@@ -108,6 +108,11 @@ def affectedAirports(analyzer, airport):
 def routecities(analyzer, city1, city2):
 
     return model.routeCities(analyzer, city1, city2)
+
+
+def compareResults(analyzer, city1, city2):
+
+    return model.compareResults(analyzer, city1, city2)
 
 
 def seeRequirements(analyzer, data1, data2, data3, data4, data5):
