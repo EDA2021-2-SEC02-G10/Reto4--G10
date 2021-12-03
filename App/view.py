@@ -31,7 +31,7 @@ assert cf
 from DISClib.ADT import map as mp
 from DISClib.DataStructures import mapentry as me
 
-default_limit = 10000 
+default_limit = 10000
 sys.setrecursionlimit(default_limit*10)
 """
 La vista se encarga de la interacción con el usuario
@@ -239,6 +239,7 @@ while True:
             city2f = lt.getElement(lst, 1)
 
         result6 = controller.compareResults(analyzer, city1f, city2f)
+        printResults3(result6)
 
     elif int(inputs[0]) == 8:
 

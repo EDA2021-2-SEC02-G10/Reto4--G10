@@ -401,12 +401,23 @@ def compareResults(analyzer, city1, city2):
     lng1 = city1['lng']
     lat2 = city2['lat']
     lng2 = city2['lng']
+    print(city2)
     airport1raw = amadeus.reference_data.locations.airports.get(longitude=lng1, latitude=lat1)
     airport2raw = amadeus.reference_data.locations.airports.get(longitude=lng2, latitude=lat2)
+    print(airport1raw.data)
+    print(airport2raw.data)
     airport1 = (airport1raw.data)[1]['iataCode']
     airport2 = (airport2raw.data)[1]['iataCode']
-    airport1Distance = [(airport1raw)[1]['lat'], airport1raw[1], ['lng']]
-    airport2Distance = [(airport2raw)[1]['lat'], airport2raw[1], ['lng']]
+    airport1DistanceData = [(airport1raw.data)[1]['geoCode']['latitude'], airport1raw.data[1]['geoCode']['longitude']]
+    airport2DistanceData = [(airport2raw.data)[1]['geoCode']['latitude'], airport2raw.data[1]['geoCode']['longitude']]
+    airport1Distance = haversine(lng1, lat1, airport1DistanceData[1], airport1DistanceData[0])
+    airport2Distance = haversine(lng2, lat2, airport2DistanceData[1], airport2DistanceData[0])
+
+    # Obtencion de la distancia del trayecto
+    search = dk.Dijkstra(analyzer['airports'], airport1)
+    path = dk.pathTo(search, airport2)
+
+    return airport1, airport2, path, airport1Distance, airport2Distance
 
 # REQ 7
 
