@@ -70,7 +70,11 @@ def printResults1(analyzer, result):
 def printResults3(result):
 
     total = 0
-    stack = result[2].copy()
+    stack = result[2]
+    if stack is None:
+        pass
+    else:
+        stack = result[2].copy()
     print('El aeropuerto de salida es: ' + str(result[0]))
     print('El aeropuerto de llegada es: ' + str(result[1]))
     print('De la ciudad de salida al aeropuerto asociado hay: ' + str(result[3]) + ' km')
@@ -133,9 +137,6 @@ while True:
         print("Para el grafo 2 hay: ")
         print(str(gr.numVertices(analyzer['airportsB'])) + ' aeropuertos')
         print(str((gr.numEdges(analyzer['airportsB'])//2)) + ' rutas aereas en ambas direcciones')
-        print('Para el grafo 3 de ciudades y aeropuertos hay: ')
-        print(str(gr.numVertices(analyzer['graphCities'])) + ' aeropuertos y ciudades')
-        print(str(gr.numEdges(analyzer['graphCities'])) + ' rutas aeropuerto-ciudad o viceversa')
         print('El total de ciudades es de: ' + str(mp.size(analyzer['cities'])))
         cities = mp.keySet(analyzer['cities'])
         cityl = lt.getElement(cities, (lt.size(cities) - 1))
@@ -213,7 +214,8 @@ while True:
 
     elif int(inputs[0]) == 8:
 
-        controller.seeRequirements(analyzer, result1, result2, result3, result4, result5)
+        data2 = [codigo1, codigo2]
+        controller.seeRequirements(analyzer, result1, data2, result3, result4, result5)
 
     else:
         sys.exit(0)

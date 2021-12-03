@@ -184,10 +184,11 @@ def loadAirports(analyzer, name, city, country, airport, lat, lng):
         dictAir['lng'] = float(lng)
         lt.addLast(lstAir, dictAir)
         mp.put(analyzer['airportsMap'], airport, dictAir)
+        #addAirport(analyzer, airport)
 
 
     # Ahora se crea el grafo de graphCities
-
+"""
     cityDataEntry = mp.get(analyzer['cities'], city)
     if cityDataEntry is not None:
         cityDataLst = me.getValue(cityDataEntry)
@@ -202,7 +203,7 @@ def loadAirports(analyzer, name, city, country, airport, lat, lng):
         addConectionC(analyzer, airport, city, distance)
         addConectionC(analyzer, city, airport, distance)
 
-"""
+
     # Se hacen las conexiones con otros aeropuertos
 
     if gr.containsVertex(analyzer['airports'], airport):
@@ -401,6 +402,24 @@ def seeRequirements(analyzer, data1, data2, data3, data4, data5):
 
     myMap1.save("map1.html")
     webbrowser.open("map1.html")
+
+    # REQ 2
+    port1 = data2[0]
+    port2 = data2[1]
+    print(port1)
+    myMap2 = folium.Map()
+    port1Entry = mp.get(analyzer['airportsMap'], port1)
+    port1Data = me.getValue(port1Entry)
+    port2Entry = mp.get(analyzer['airportsMap'], port2)
+    port2Data = me.getValue(port2Entry)
+    lat21 = port1Data['lat']
+    lng21 = port1Data['lng']
+    lat22 = port2Data['lat']
+    lng22 = port2Data['lng']
+    folium.Marker([lat21, lng21], popup='Airport1').add_to(myMap2)
+    folium.Marker([lat22, lng22], popup='Airport2').add_to(myMap2)
+    myMap2.save("map2.html")
+    webbrowser.open("map2.html")
 
     # REQ 3
     path = data3[2]
