@@ -55,7 +55,7 @@ def loadData(analyzer):
 
 def loadRoutes(analyzer):
 
-    routesfile = cf.data_dir + 'routes-utf8-small.csv'
+    routesfile = cf.data_dir + 'routes_full.csv'
     input_file = csv.DictReader(open(routesfile, encoding="utf-8"))
     for row in input_file:
         model.loadRoutes(analyzer, row['Airline'], row['Departure'],
@@ -77,7 +77,7 @@ def loadCities(analyzer):
 
 def loadAirports(analyzer):
 
-    airportsfile = cf.data_dir + 'airports-utf8-small.csv'
+    airportsfile = cf.data_dir + 'airports_full.csv'
     input_file = csv.DictReader(open(airportsfile, encoding="utf-8"))
     for row in input_file:
         model.loadAirports(analyzer, row['Name'], row['City'], row['Country'], row['IATA'],

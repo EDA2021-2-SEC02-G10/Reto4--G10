@@ -70,7 +70,7 @@ def printResults1(analyzer, result):
 def printResults3(result):
 
     total = 0
-    stack = result[2]
+    stack = result[2].copy()
     print('El aeropuerto de salida es: ' + str(result[0]))
     print('El aeropuerto de llegada es: ' + str(result[1]))
     print('De la ciudad de salida al aeropuerto asociado hay: ' + str(result[3]) + ' km')

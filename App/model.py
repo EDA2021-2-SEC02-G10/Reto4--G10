@@ -322,7 +322,7 @@ def Clusters (analyzer,codigo1,codigo2):
 def routeCities(analyzer, city1, city2):
 
     # Calculo del aeropuerto mas cercano a cada ciudad
-    airports = mp.keySet(analyzer['airportsMap'])
+    airports = gr.vertices(analyzer['airports'])
     distance1Min = 100000000000000000000000000000000
     distance2Min = 100000000000000000000000000000000
     minAirport1 = None
@@ -345,9 +345,9 @@ def routeCities(analyzer, city1, city2):
     search = dk.Dijkstra(analyzer['airports'], minAirport1)
     path = dk.pathTo(search, minAirport2)
 
-    return minAirport1, minAirport2, path, distance1Min, distance2Min
+    return minAirport1, minAirport2, path, distance1Min, distance2Min, city1, city2
 
-#REQ 4
+# REQ 4
 
 def Millas_viajero (analyzer, ciudad, millas):
     millaskm = millas*1.60
@@ -389,19 +389,62 @@ def seeRequirements(analyzer, data1, data2, data3, data4, data5):
 
     # REQ 1
     lstReq1 = data1[0]
-    myMap = folium.Map()
+    myMap1 = folium.Map()
     for airport in lt.iterator(lstReq1):
 
         name = (list(airport.keys()))[0]
-        print(name)
         airportDataEntry = mp.get(analyzer['airportsMap'], name)
         airportData = me.getValue(airportDataEntry)
         lat = airportData['lat']
         lng = airportData['lng']
-        folium.Marker([lat, lng], popup='TopAirport').add_to(myMap)
+        folium.Marker([lat, lng], popup='TopAirport').add_to(myMap1)
 
-    myMap.save("map.html")
-    webbrowser.open("map.html")
+    myMap1.save("map1.html")
+    webbrowser.open("map1.html")
+
+    # REQ 3
+    path = data3[2]
+    city1 = data3[5]
+    city2 = data3[6]
+    check = []
+    myMap3 = folium.Map()
+    while st.isEmpty(path) is False:
+        top = st.pop(path)
+        top1 = top['vertexA']
+        top1Entry = mp.get(analyzer['airportsMap'], top1)
+        top1Data = me.getValue(top1Entry)
+        top2 = top['vertexB']
+        top2Entry = mp.get(analyzer['airportsMap'], top2)
+        top2Data = me.getValue(top2Entry)
+        lat1 = top1Data['lat']
+        lng1 = top1Data['lng']
+        lat2 = top2Data['lat']
+        lng2 = top2Data['lng']
+        if top1 not in check:
+            folium.Marker([lat1, lng1], popup='Airport').add_to(myMap3)
+            check.append(top1)
+        if top2 not in check:
+            folium.Marker([lat2, lng2], popup='Airport').add_to(myMap3)
+            check.append(top1)
+
+    folium.Marker([city1['lat'], city1['lng']], popup='City').add_to(myMap3)
+    folium.Marker([city2['lat'], city2['lng']], popup='City').add_to(myMap3)
+    myMap3.save("map3.html")
+    webbrowser.open("map3.html")
+
+    # REQ 5
+    final = data5[1]
+    myMap5 = folium.Map()
+    for airport in lt.iterator(final):
+        airportDataEntry = mp.get(analyzer['airportsMap'], airport)
+        airportData = me.getValue(airportDataEntry)
+        lat = airportData['lat']
+        lng = airportData['lng']
+        folium.Marker([lat, lng], popup='AffAirport').add_to(myMap5)
+
+    myMap5.save("map5.html")
+    webbrowser.open("map5.html")
+
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
