@@ -158,11 +158,15 @@ while True:
 
         codigo1 = input('Ingrese el código IATA del primer aeropuerto: ')
         codigo2 = input('Ingrese el código IATA del segundo aeropuerto: ')
+
         result2 = controller.Clusters(analyzer, codigo1, codigo2)
+
         if (result2[0]) is True:
             print('Los dos aeropuertos están en el mismo clúster.')
+
         else:
             print('Los dos aeropuertos no están en el mismo clúster.')
+
         print('Hay ' + str(result2[1]) + ' clústeres en la red de transporte aéreo.')
 
     elif int(inputs[0]) == 4:
@@ -199,8 +203,10 @@ while True:
         printResults3(result3)
 
     elif int(inputs[0]) == 5:
-
-        result4 = None
+        ciudad = input('Ingrese el código IATA del aeropuerto desde el que desea iniciar su viaje: ')
+        millas = float(input('Ingrese la canidad de millas: '))
+        result4 = controller.Millas_viajero(analyzer,ciudad,millas)
+        print(result4)
 
     elif int(inputs[0]) == 6:
 

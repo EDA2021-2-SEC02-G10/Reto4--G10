@@ -26,29 +26,30 @@
 
 
 from DISClib.Algorithms.Graphs.scc import KosarajuSCC, stronglyConnected, connectedComponents
-from DISClib.Algorithms.Graphs.prim import PrimMST
+from DISClib.Algorithms.Graphs.prim import PrimMST, edgesMST,prim
 from DISClib.DataStructures.arraylist import size
 from DISClib.DataStructures.chaininghashtable import contains
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.ADT import stack as st
 from DISClib.ADT import map as mp
+from DISClib.ADT import queue as q
 from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import shellsort as sa
-from DISClib.ADT.graph import adjacents, containsVertex, gr, indegree, outdegree
+from DISClib.ADT.graph import adjacents, containsVertex, gr, indegree, outdegree,numVertices
 from DISClib.Algorithms.Sorting import mergesort as ms
 from DISClib.Algorithms.Graphs import dijsktra as dk
 from math import radians, cos, sin, asin, sqrt
-import folium 
+#import folium 
 import webbrowser
-from amadeus import Client, ResponseError
-import amadeus
+#from amadeus import Client, ResponseError
+#import amadeus
 assert cf
 
-amadeus = Client(
-    client_id='LCmwDrZVpQGFwrn6mzzt9Qq2SolQAH6v',
-    client_secret='kaPXJqapidulSOhq'
-)
+#amadeus = Client(
+#    client_id='LCmwDrZVpQGFwrn6mzzt9Qq2SolQAH6v',
+#    client_secret='kaPXJqapidulSOhq'
+#)
 
 """
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
@@ -315,13 +316,12 @@ def interconexionPoints(analyzer):
 #REQ 2
 
 def Clusters (analyzer,codigo1,codigo2):
-    cantidad_fuertemende_conectados = 0
     Kosaraju = KosarajuSCC(analyzer['airports'])
     aeropuertos_fuertemente_conectados = stronglyConnected(Kosaraju,codigo1,codigo2)
     
-    cantidad_fuertemende_conectados += connectedComponents(Kosaraju)
+    cantidad_fuertemente_conectados = connectedComponents(Kosaraju)
     
-    return (aeropuertos_fuertemente_conectados,cantidad_fuertemende_conectados)
+    return (aeropuertos_fuertemente_conectados,cantidad_fuertemente_conectados)
 
 # REQ 3
 
@@ -361,8 +361,7 @@ def routeCities(analyzer, city1, city2):
 
 def Millas_viajero (analyzer, ciudad, millas):
     millaskm = millas*1.60
-    MST = PrimMST(analyzer[''])
-
+    mst = PrimMST(analyzer['airportsB'])
 
 # REQ 5
 
@@ -402,22 +401,22 @@ def compareResults(analyzer, city1, city2):
     lat2 = city2['lat']
     lng2 = city2['lng']
     print(city2)
-    airport1raw = amadeus.reference_data.locations.airports.get(longitude=lng1, latitude=lat1)
-    airport2raw = amadeus.reference_data.locations.airports.get(longitude=lng2, latitude=lat2)
-    print(airport1raw.data)
-    print(airport2raw.data)
-    airport1 = (airport1raw.data)[1]['iataCode']
-    airport2 = (airport2raw.data)[1]['iataCode']
-    airport1DistanceData = [(airport1raw.data)[1]['geoCode']['latitude'], airport1raw.data[1]['geoCode']['longitude']]
-    airport2DistanceData = [(airport2raw.data)[1]['geoCode']['latitude'], airport2raw.data[1]['geoCode']['longitude']]
-    airport1Distance = haversine(lng1, lat1, airport1DistanceData[1], airport1DistanceData[0])
-    airport2Distance = haversine(lng2, lat2, airport2DistanceData[1], airport2DistanceData[0])
+  #  airport1raw = amadeus.reference_data.locations.airports.get(longitude=lng1, latitude=lat1)
+   # airport2raw = amadeus.reference_data.locations.airports.get(longitude=lng2, latitude=lat2)
+   # print(airport1raw.data)
+    #print(airport2raw.data)
+    #airport1 = (airport1raw.data)[1]['iataCode']
+    #airport2 = (airport2raw.data)[1]['iataCode']
+    #airport1DistanceData = [(airport1raw.data)[1]['geoCode']['latitude'], airport1raw.data[1]['geoCode']['longitude']]
+    #airport2DistanceData = [(airport2raw.data)[1]['geoCode']['latitude'], airport2raw.data[1]['geoCode']['longitude']]
+    #airport1Distance = haversine(lng1, lat1, airport1DistanceData[1], airport1DistanceData[0])
+    #airport2Distance = haversine(lng2, lat2, airport2DistanceData[1], airport2DistanceData[0])
 
     # Obtencion de la distancia del trayecto
-    search = dk.Dijkstra(analyzer['airports'], airport1)
-    path = dk.pathTo(search, airport2)
+   # search = dk.Dijkstra(analyzer['airports'], airport1)
+    #path = dk.pathTo(search, airport2)
 
-    return airport1, airport2, path, airport1Distance, airport2Distance
+    #return airport1, airport2, path, airport1Distance, airport2Distance
 
 # REQ 7
 
@@ -425,7 +424,7 @@ def seeRequirements(analyzer, data1, data2, data3, data4, data5):
 
     # REQ 1
     lstReq1 = data1[0]
-    myMap1 = folium.Map()
+   # myMap1 = folium.Map()
     for airport in lt.iterator(lstReq1):
 
         name = (list(airport.keys()))[0]
@@ -433,16 +432,16 @@ def seeRequirements(analyzer, data1, data2, data3, data4, data5):
         airportData = me.getValue(airportDataEntry)
         lat = airportData['lat']
         lng = airportData['lng']
-        folium.Marker([lat, lng], popup='TopAirport').add_to(myMap1)
+    #    folium.Marker([lat, lng], popup='TopAirport').add_to(myMap1)
 
-    myMap1.save("map1.html")
+    #myMap1.save("map1.html")
     webbrowser.open("map1.html")
 
     # REQ 2
     port1 = data2[0]
     port2 = data2[1]
     print(port1)
-    myMap2 = folium.Map()
+   # myMap2 = folium.Map()
     port1Entry = mp.get(analyzer['airportsMap'], port1)
     port1Data = me.getValue(port1Entry)
     port2Entry = mp.get(analyzer['airportsMap'], port2)
@@ -451,9 +450,9 @@ def seeRequirements(analyzer, data1, data2, data3, data4, data5):
     lng21 = port1Data['lng']
     lat22 = port2Data['lat']
     lng22 = port2Data['lng']
-    folium.Marker([lat21, lng21], popup='Airport1').add_to(myMap2)
-    folium.Marker([lat22, lng22], popup='Airport2').add_to(myMap2)
-    myMap2.save("map2.html")
+   # folium.Marker([lat21, lng21], popup='Airport1').add_to(myMap2)
+    #folium.Marker([lat22, lng22], popup='Airport2').add_to(myMap2)
+    #myMap2.save("map2.html")
     webbrowser.open("map2.html")
 
     # REQ 3
@@ -461,7 +460,7 @@ def seeRequirements(analyzer, data1, data2, data3, data4, data5):
     city1 = data3[5]
     city2 = data3[6]
     check = []
-    myMap3 = folium.Map()
+   # myMap3 = folium.Map()
     while st.isEmpty(path) is False:
         top = st.pop(path)
         top1 = top['vertexA']
@@ -475,28 +474,28 @@ def seeRequirements(analyzer, data1, data2, data3, data4, data5):
         lat2 = top2Data['lat']
         lng2 = top2Data['lng']
         if top1 not in check:
-            folium.Marker([lat1, lng1], popup='Airport').add_to(myMap3)
+          #  folium.Marker([lat1, lng1], popup='Airport').add_to(myMap3)
             check.append(top1)
         if top2 not in check:
-            folium.Marker([lat2, lng2], popup='Airport').add_to(myMap3)
+          #  folium.Marker([lat2, lng2], popup='Airport').add_to(myMap3)
             check.append(top1)
 
-    folium.Marker([city1['lat'], city1['lng']], popup='City').add_to(myMap3)
-    folium.Marker([city2['lat'], city2['lng']], popup='City').add_to(myMap3)
-    myMap3.save("map3.html")
+  #  folium.Marker([city1['lat'], city1['lng']], popup='City').add_to(myMap3)
+   # folium.Marker([city2['lat'], city2['lng']], popup='City').add_to(myMap3)
+   # myMap3.save("map3.html")
     webbrowser.open("map3.html")
 
     # REQ 5
     final = data5[1]
-    myMap5 = folium.Map()
+   # myMap5 = folium.Map()
     for airport in lt.iterator(final):
         airportDataEntry = mp.get(analyzer['airportsMap'], airport)
         airportData = me.getValue(airportDataEntry)
         lat = airportData['lat']
         lng = airportData['lng']
-        folium.Marker([lat, lng], popup='AffAirport').add_to(myMap5)
+     #   folium.Marker([lat, lng], popup='AffAirport').add_to(myMap5)
 
-    myMap5.save("map5.html")
+  #  myMap5.save("map5.html")
     webbrowser.open("map5.html")
 
 
