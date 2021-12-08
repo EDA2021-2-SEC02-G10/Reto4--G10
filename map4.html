@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_55143fe07cdb42e3ba9fe02a2404941b {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+            <div class="folium-map" id="map_55143fe07cdb42e3ba9fe02a2404941b" ></div>
+        
+</body>
+<script>    
+    
+            var map_55143fe07cdb42e3ba9fe02a2404941b = L.map(
+                "map_55143fe07cdb42e3ba9fe02a2404941b",
+                {
+                    center: [0, 0],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 1,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_55e99733914d4cb791a9e75e237cf34e = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_55143fe07cdb42e3ba9fe02a2404941b);
+        
+    
+            var marker_7888a17b29704cef95b4d81a18b208c4 = L.marker(
+                [59.8003006, 30.26250076],
+                {}
+            ).addTo(map_55143fe07cdb42e3ba9fe02a2404941b);
+        
+    
+        var popup_b498ea94e3d54eaca7a1808ab7257360 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_0fa0b81bcd4444b19fe21353385ba040 = $(`<div id="html_0fa0b81bcd4444b19fe21353385ba040" style="width: 100.0%; height: 100.0%;">Airport</div>`)[0];
+            popup_b498ea94e3d54eaca7a1808ab7257360.setContent(html_0fa0b81bcd4444b19fe21353385ba040);
+        
+
+        marker_7888a17b29704cef95b4d81a18b208c4.bindPopup(popup_b498ea94e3d54eaca7a1808ab7257360)
+        ;
+
+        
+    
+    
+            var marker_c20cea738d474b14989fd605d46be3cc = L.marker(
+                [53.50490189, 50.16429901],
+                {}
+            ).addTo(map_55143fe07cdb42e3ba9fe02a2404941b);
+        
+    
+        var popup_8c8eee1af0e74127af57f223f5953f67 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_898244ac73544277a6b1fd8992b93672 = $(`<div id="html_898244ac73544277a6b1fd8992b93672" style="width: 100.0%; height: 100.0%;">Airport</div>`)[0];
+            popup_8c8eee1af0e74127af57f223f5953f67.setContent(html_898244ac73544277a6b1fd8992b93672);
+        
+
+        marker_c20cea738d474b14989fd605d46be3cc.bindPopup(popup_8c8eee1af0e74127af57f223f5953f67)
+        ;
+
+        
+    
+    
+            var marker_bf7b5ea79a114fa0a856c24fc318a429 = L.marker(
+                [25.25279999, 55.36439896],
+                {}
+            ).addTo(map_55143fe07cdb42e3ba9fe02a2404941b);
+        
+    
+        var popup_573898f3ecd0450e97186e41e0cb27dd = L.popup({"maxWidth": "100%"});
+
+        
+            var html_70d450cd2887435ca1286c0e116fb692 = $(`<div id="html_70d450cd2887435ca1286c0e116fb692" style="width: 100.0%; height: 100.0%;">Airport</div>`)[0];
+            popup_573898f3ecd0450e97186e41e0cb27dd.setContent(html_70d450cd2887435ca1286c0e116fb692);
+        
+
+        marker_bf7b5ea79a114fa0a856c24fc318a429.bindPopup(popup_573898f3ecd0450e97186e41e0cb27dd)
+        ;
+
+        
+    
+    
+            var marker_fc68d0d0dc5d48b9a6e689a472905108 = L.marker(
+                [10.81879997, 106.6520004],
+                {}
+            ).addTo(map_55143fe07cdb42e3ba9fe02a2404941b);
+        
+    
+        var popup_6bb84b04750744178c3082c11f2c8d40 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_273c3788f1794ea481934d8475d8d759 = $(`<div id="html_273c3788f1794ea481934d8475d8d759" style="width: 100.0%; height: 100.0%;">Airport</div>`)[0];
+            popup_6bb84b04750744178c3082c11f2c8d40.setContent(html_273c3788f1794ea481934d8475d8d759);
+        
+
+        marker_fc68d0d0dc5d48b9a6e689a472905108.bindPopup(popup_6bb84b04750744178c3082c11f2c8d40)
+        ;
+
+        
+    
+</script>

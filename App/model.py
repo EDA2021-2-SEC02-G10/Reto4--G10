@@ -398,7 +398,7 @@ def Millas_viajero(analyzer, ciudad, millas):
         if element is not None:
             used += 2*(distances[element])
             if used > km:
-                pass
+                break
             else:
                 lt.addLast(final, element)
 
@@ -464,6 +464,7 @@ def compareResults(analyzer, city1, city2):
 
 def seeRequirements(analyzer, data1, data2, data3, data4, data5):
 
+    """
     # REQ 1
     lstReq1 = data1[0]
     myMap1 = folium.Map()
@@ -526,7 +527,22 @@ def seeRequirements(analyzer, data1, data2, data3, data4, data5):
     folium.Marker([city2['lat'], city2['lng']], popup='City').add_to(myMap3)
     myMap3.save("map3.html")
     webbrowser.open("map3.html")
+"""
 
+    # REQ 4
+    final5 = data4[0]
+    myMap4 = folium.Map()
+    for airport in lt.iterator(final5):
+        airportDataEntry = mp.get(analyzer['airportsMap'], airport)
+        airportData = me.getValue(airportDataEntry)
+        lat = airportData['lat']
+        lng = airportData['lng']
+        folium.Marker([lat, lng], popup='Airport').add_to(myMap4)
+
+    myMap4.save("map4.html")
+    webbrowser.open("map4.html")
+
+"""
     # REQ 5
     final = data5[1]
     myMap5 = folium.Map()
@@ -539,7 +555,7 @@ def seeRequirements(analyzer, data1, data2, data3, data4, data5):
 
     myMap5.save("map5.html")
     webbrowser.open("map5.html")
-
+"""
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 

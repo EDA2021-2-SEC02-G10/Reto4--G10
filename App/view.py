@@ -263,7 +263,8 @@ while True:
 
     elif int(inputs[0]) == 8:
 
-        data2 = [codigo1, codigo2]
+        #data2 = [codigo1, codigo2]
+        data2 = 1
         controller.seeRequirements(analyzer, result1, data2, result3, result4, result5)
 
     else:
