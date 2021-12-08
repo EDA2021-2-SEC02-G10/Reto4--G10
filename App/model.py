@@ -408,10 +408,15 @@ def Millas_viajero(analyzer, ciudad, millas):
 
     return final, finalDistances, nodeTotal, costTotal, maxPath, used
 
+
 # REQ 5
 
 def affectedAirports(analyzer, airport):
 
+    counter = gr.degree(analyzer['airports'], airport)
+    final = gr.adjacents(analyzer['airports'], airport)
+
+    """
     check = []
     stack = st.newStack('SINGLE_LINKED')
     inicial = gr.adjacents(analyzer['airports'], airport)
@@ -433,6 +438,7 @@ def affectedAirports(analyzer, airport):
             if element not in check:
                 st.push(stack, element)
                 check.append(element)
+    """
 
     return counter, final
 

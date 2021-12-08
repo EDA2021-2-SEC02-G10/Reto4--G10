@@ -109,7 +109,10 @@ def printResults5(result):
 
     print('El numero de aeropuertos afectados por el cierre es: ' + str(result[0]))
     print('Los aeropuertos afectados por el cierre son: ')
-    print(result[1])
+    for element in lt.iterator(result[1]):
+        entry = mp.get(analyzer['airportsMap'], element)
+        data = me.getValue(entry)
+        print(data)
 
 
 def printMenu():
@@ -263,8 +266,7 @@ while True:
 
     elif int(inputs[0]) == 8:
 
-        #data2 = [codigo1, codigo2]
-        data2 = 1
+        data2 = [codigo1, codigo2]
         controller.seeRequirements(analyzer, result1, data2, result3, result4, result5)
 
     else:
