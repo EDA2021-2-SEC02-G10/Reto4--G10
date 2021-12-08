@@ -91,6 +91,20 @@ def printResults3(result):
     print('La distancia total recorrida es de: ' + str(total) + ' km')
 
 
+def printResults4(result):
+
+    print('El total de nodos del arbol de expansion es: ' + str(result[2]))
+    print('El costo total del arbol de expansion es: ' + str(result[3]))
+    print('La rama mas larga es :')
+    print(result[4])
+    print('El costo de esta rama es de: ')
+    print(str(result[5]))
+    print('El camino posible con las millas dadas, de ida y vuelta es: ')
+    print(result[0])
+    print('Y sus distancias para cada segmento del camino son :')
+    print(result[1])
+
+
 def printResults5(result):
 
     print('El numero de aeropuertos afectados por el cierre es: ' + str(result[0]))
@@ -203,10 +217,10 @@ while True:
         printResults3(result3)
 
     elif int(inputs[0]) == 5:
-        ciudad = input('Ingrese el código IATA del aeropuerto desde el que desea iniciar su viaje: ')
+        ciudad = input('Ingrese el nombre de la ciudad de la cual desea viajar: ')
         millas = float(input('Ingrese la canidad de millas: '))
-        result4 = controller.Millas_viajero(analyzer,ciudad,millas)
-        print(result4)
+        result4 = controller.Millas_viajero(analyzer, ciudad, millas)
+        printResults4(result4)
 
     elif int(inputs[0]) == 6:
 

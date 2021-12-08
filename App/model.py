@@ -30,6 +30,7 @@ from DISClib.Algorithms.Graphs.prim import PrimMST, edgesMST,prim
 from DISClib.DataStructures.arraylist import size
 from DISClib.DataStructures.chaininghashtable import contains
 import config as cf
+from DISClib.ADT import orderedmap as om
 from DISClib.ADT import list as lt
 from DISClib.ADT import stack as st
 from DISClib.ADT import map as mp
@@ -39,6 +40,8 @@ from DISClib.Algorithms.Sorting import shellsort as sa
 from DISClib.ADT.graph import adjacents, containsVertex, gr, indegree, outdegree,numVertices
 from DISClib.Algorithms.Sorting import mergesort as ms
 from DISClib.Algorithms.Graphs import dijsktra as dk
+from DISClib.Algorithms.Graphs import prim as pr
+from DISClib.Algorithms.Graphs import dfs as dfs
 from math import radians, cos, sin, asin, sqrt
 import folium 
 import webbrowser
@@ -359,9 +362,51 @@ def routeCities(analyzer, city1, city2):
 
 # REQ 4
 
-def Millas_viajero (analyzer, ciudad, millas):
-    millaskm = millas*1.60
-    mst = PrimMST(analyzer['airportsB'])
+def Millas_viajero(analyzer, ciudad, millas):
+
+    airport = ciudad
+    km = millas*1.60
+    used = 0
+    nodeTotal = 0
+    costTotal = 0
+    distances = {}
+    search = pr.PrimMST(analyzer['airportsB'])
+    mst = pr.prim(analyzer['airportsB'], search, ciudad)
+    nodeLst = lt.newList('ARRAY_LIST')
+    tablen = (mst['distTo'])
+    table = tablen['table']
+    for element in lt.iterator(table):
+        if element['key'] is not None:
+            lt.addLast(nodeLst, element['key'])
+            distances[element['key']] = element['value']
+
+    bs = dfs.DepthFirstSearch(analyzer['airportsB'], airport)
+    maxPath = None
+    maxLength = 0
+    nodeTotal = lt.size(nodeLst)
+    for node in lt.iterator(nodeLst):
+        costTotal += distances[node]
+        path = dfs.pathTo(bs, node)
+        if path is not None:
+            length = st.size(path)
+            if length > maxLength:
+                maxPath = path
+                maxLength = length
+
+    final = lt.newList('ARRAY_LIST')
+    for element in lt.iterator(maxPath):
+        if element is not None:
+            used += 2*(distances[element])
+            if used > km:
+                pass
+            else:
+                lt.addLast(final, element)
+
+    finalDistances = []
+    for element in lt.iterator(final):
+        finalDistances.append(distances[element])
+
+    return final, finalDistances, nodeTotal, costTotal, maxPath, used
 
 # REQ 5
 
@@ -400,11 +445,8 @@ def compareResults(analyzer, city1, city2):
     lng1 = city1['lng']
     lat2 = city2['lat']
     lng2 = city2['lng']
-    print(city2)
     airport1raw = amadeus.reference_data.locations.airports.get(longitude=lng1, latitude=lat1)
     airport2raw = amadeus.reference_data.locations.airports.get(longitude=lng2, latitude=lat2)
-    print(airport1raw.data)
-    print(airport2raw.data)
     airport1 = (airport1raw.data)[1]['iataCode']
     airport2 = (airport2raw.data)[1]['iataCode']
     airport1DistanceData = [(airport1raw.data)[1]['geoCode']['latitude'], airport1raw.data[1]['geoCode']['longitude']]
